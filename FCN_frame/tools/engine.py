@@ -1,4 +1,5 @@
 import time
+from model.unet import UNet
 import torch
 from model import fcn_resnet50,VGG16UNet
 from model.deeplabv3_model import deeplabv3_resnet50
@@ -6,7 +7,7 @@ import torch.optim as optim
 from torch import nn
 from torch.nn.functional import cross_entropy as criterion
 import numpy as np
-from utils import compute_miou,compute_iou_per_class
+from .utils import compute_miou,compute_iou_per_class
 import datetime
 
 from sklearn.metrics import precision_recall_fscore_support
@@ -27,7 +28,7 @@ def create_model(aux,model_name, num_classes,):
     if model_name=="fcn_resnet50":
       model = fcn_resnet50(aux,num_classes=num_classes)
     elif model_name == "unet":
-      model = UNet(num_classes=num_classes,pretrain_backbone=True)
+      model = UNet(num_classes=num_classes)
     elif model_name == "vgg16unet":
       model = VGG16UNet(num_classes=num_classes,pretrain_backbone=True)
     elif model_name == "deeplabv3_resnet50":
